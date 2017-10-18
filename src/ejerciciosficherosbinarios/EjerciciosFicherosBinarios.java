@@ -90,7 +90,7 @@ class Alumno implements Serializable {
 
     public void insertarDatos(int matricula) {
         Scanner teclado = new Scanner(System.in);
-        this.matricula=matricula;
+        this.matricula = matricula;
         System.out.println("Nombre: ");
         this.nombre = teclado.nextLine();
         System.out.println("calificacion 1: ");
@@ -106,77 +106,71 @@ public class EjerciciosFicherosBinarios {
 
     private static final long serialVersionUID = 1L;
 
-    
-    public static void rellenarFichero(File fichero) throws FileNotFoundException, IOException, ClassNotFoundException{
-        
-          ObjectInputStream leyendo_objeto = new ObjectInputStream(new FileInputStream(fichero));
-          ArrayList<Alumno> alumnos = (ArrayList<Alumno>) leyendo_objeto.readObject();
-          Alumno aux = new Alumno();
-          aux.insertarDatos(alumnos.size()+1);
-          alumnos.add(aux);
-          leyendo_objeto.close();
-          ObjectOutputStream escribiendo_objeto = new ObjectOutputStream(new FileOutputStream(fichero));
-          escribiendo_objeto.writeObject(alumnos);
-          escribiendo_objeto.close();
-        
+    public static void rellenarFichero(File fichero) throws FileNotFoundException, IOException, ClassNotFoundException {
+
+        ObjectInputStream leyendo_objeto = new ObjectInputStream(new FileInputStream(fichero));
+        ArrayList<Alumno> alumnos = (ArrayList<Alumno>) leyendo_objeto.readObject();
+        Alumno aux = new Alumno();
+        aux.insertarDatos(alumnos.size() + 1);
+        alumnos.add(aux);
+        leyendo_objeto.close();
+        ObjectOutputStream escribiendo_objeto = new ObjectOutputStream(new FileOutputStream(fichero));
+        escribiendo_objeto.writeObject(alumnos);
+        escribiendo_objeto.close();
+
     }
-    
-    public static void crearFichero(File fichero) throws IOException{
-        
-       fichero.createNewFile();
-       ArrayList<Alumno> arrayalumnos = new ArrayList<>();
+
+    public static void crearFichero(File fichero) throws IOException {
+
+        fichero.createNewFile();
+        ArrayList<Alumno> arrayalumnos = new ArrayList<>();
         arrayalumnos.add(new Alumno(1, "pepe", 3, 2));
         arrayalumnos.add(new Alumno(2, "juan", 5, 7));
         arrayalumnos.add(new Alumno(3, "alberto", 9, 8));
-         ObjectOutputStream escribiendo_objeto = new ObjectOutputStream(new FileOutputStream(fichero));
-          escribiendo_objeto.writeObject(arrayalumnos);
-          escribiendo_objeto.close();
-        
-    }
-    
-    public static boolean mostrardatosElegido(File fichero,int matricula) throws FileNotFoundException, IOException, ClassNotFoundException{
-            boolean pasar=true;
-          ObjectInputStream leyendo_objeto = new ObjectInputStream(new FileInputStream(fichero));
-          ArrayList<Alumno> alumnos = (ArrayList<Alumno>) leyendo_objeto.readObject();
-         
-          for (Alumno alumno : alumnos) {
-               
-                if (alumno.getMatricula() == matricula) {
-                    System.out.println("Coincidencia encontrada, mostrando alumno");
-                    System.out.println(alumno);
-                    pasar = false;
+        ObjectOutputStream escribiendo_objeto = new ObjectOutputStream(new FileOutputStream(fichero));
+        escribiendo_objeto.writeObject(arrayalumnos);
+        escribiendo_objeto.close();
 
-                }
+    }
+
+    public static boolean mostrardatosElegido(File fichero, int matricula) throws FileNotFoundException, IOException, ClassNotFoundException {
+        boolean pasar = true;
+        ObjectInputStream leyendo_objeto = new ObjectInputStream(new FileInputStream(fichero));
+        ArrayList<Alumno> alumnos = (ArrayList<Alumno>) leyendo_objeto.readObject();
+
+        for (Alumno alumno : alumnos) {
+
+            if (alumno.getMatricula() == matricula) {
+                System.out.println("Coincidencia encontrada, mostrando alumno");
+                System.out.println(alumno);
+                pasar = false;
 
             }
-          return pasar;
-          
-    
-    
+
+        }
+        return pasar;
+
     }
-    
-    
+
     public static void main(String[] args) throws IOException, FileNotFoundException, ClassNotFoundException {
         Scanner teclado = new Scanner(System.in);
-       
-    
-          File fichero =  new File("C:\\Users\\Farra\\Desktop\\ficherosborrar\\datos.dat");
-          
-          if(fichero.exists()){
-             
-              System.out.println("Introduce una matricula para buscar al alumno: ");
-              int matricula = teclado.nextInt();
-              
-              if(mostrardatosElegido(fichero, matricula)){
-                  
-              }
-             
-          
-          }else{
-             crearFichero(fichero);
-              
-          
-          }
+
+        File fichero = new File("C:\\Users\\Farra\\Desktop\\ficherosborrar\\datos.dat");
+
+        if (fichero.exists()) {
+
+            System.out.println("Introduce una matricula para buscar al alumno: ");
+            int matricula = teclado.nextInt();
+
+            if (mostrardatosElegido(fichero, matricula)) {
+                System.out.println("Ninguna coincidencia, insertando nuevo alumno.");
+                rellenarFichero(fichero);
+            }
+
+        } else {
+            crearFichero(fichero);
+
+        }
 
     }
 
