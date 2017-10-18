@@ -107,7 +107,7 @@ public class EjerciciosFicherosBinarios {
     private static final long serialVersionUID = 1L;
 
     
-    public void rellenarFichero(File fichero) throws FileNotFoundException, IOException, ClassNotFoundException{
+    public static void rellenarFichero(File fichero) throws FileNotFoundException, IOException, ClassNotFoundException{
         
           ObjectInputStream leyendo_objeto = new ObjectInputStream(new FileInputStream(fichero));
           ArrayList<Alumno> alumnos = (ArrayList<Alumno>) leyendo_objeto.readObject();
@@ -134,7 +134,7 @@ public class EjerciciosFicherosBinarios {
         
     }
     
-    public boolean mostrardatosElegido(File fichero,int matricula) throws FileNotFoundException, IOException, ClassNotFoundException{
+    public static boolean mostrardatosElegido(File fichero,int matricula) throws FileNotFoundException, IOException, ClassNotFoundException{
             boolean pasar=true;
           ObjectInputStream leyendo_objeto = new ObjectInputStream(new FileInputStream(fichero));
           ArrayList<Alumno> alumnos = (ArrayList<Alumno>) leyendo_objeto.readObject();
@@ -156,16 +156,21 @@ public class EjerciciosFicherosBinarios {
     }
     
     
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, FileNotFoundException, ClassNotFoundException {
         Scanner teclado = new Scanner(System.in);
        
-        //arrayalumnos.add(new Alumno(1, "pepe", 3, 2));
-        //arrayalumnos.add(new Alumno(2, "juan", 5, 7));
-        //arrayalumnos.add(new Alumno(3, "alberto", 9, 8));
-          File fichero =  new File("/home/usuario/Escritorio/filedatos/datostre.dat");
+    
+          File fichero =  new File("C:\\Users\\Farra\\Desktop\\ficherosborrar\\datos.dat");
           
           if(fichero.exists()){
+             
+              System.out.println("Introduce una matricula para buscar al alumno: ");
+              int matricula = teclado.nextInt();
               
+              if(mostrardatosElegido(fichero, matricula)){
+                  
+              }
+             
           
           }else{
              crearFichero(fichero);
