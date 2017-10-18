@@ -168,6 +168,7 @@ public class EjerciciosFicherosBinarios {
             }
 
         } else {
+            System.out.println("El fichero no existe, creandolo... ");
             crearFichero(fichero);
 
         }
